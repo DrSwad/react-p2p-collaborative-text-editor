@@ -44,6 +44,8 @@ class Editor {
         default:
           throw new Error("Unknown operation attempted in editor.");
       }
+
+      this.controller.callbacks.onChange(this.mde.value());
     });
   }
 

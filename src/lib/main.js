@@ -8,6 +8,8 @@ import Editor from './editor';
 
 export default function initialize(
   textAreaRef,
+  placeholder,
+  initialContent,
   userName,
   callbacks,
   document,
@@ -16,7 +18,7 @@ export default function initialize(
   const editor = new Editor(
     new SimpleMDE({
       element: textAreaRef.current,
-      placeholder: "Share the link to invite collaborators to your document.",
+      placeholder: placeholder,
       spellChecker: true,
       toolbar: false,
       autofocus: false,
@@ -51,6 +53,11 @@ export default function initialize(
     controller.localInsert(text, { line: 0, ch: 0 });
     editor.replaceText(controller.crdt.toText());
   };
+
+  if (initialContent) {
+    setText(initialContent);
+    callbacks.onChange(initialContent);
+  }
 
   return { getText, setText };
 }

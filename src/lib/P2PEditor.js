@@ -3,6 +3,9 @@ import initialize from "./main";
 import "./P2PEditor.css"
 
 const P2PEditor = ({
+  placeholder =  'Share the link to invite collaborators to your document.',
+  initialContent = '',
+  onChange = (content) => {},
   userName = 'Unnamed User',
   setPeers = (peers) => {},
   setSharingLink = (sharingLink) => {},
@@ -11,12 +14,14 @@ const P2PEditor = ({
   useEffect(() => {
     initialize(
       textAreaRef,
+      placeholder,
+      initialContent,
       userName,
-      { setPeers, setSharingLink },
+      { setPeers, setSharingLink, onChange },
       document,
       window,
     );
-  }, [userName, setPeers, setSharingLink]);
+  }, [placeholder, initialContent, userName, onChange, setPeers, setSharingLink]);
 
   const textAreaRef = useRef(null)
 

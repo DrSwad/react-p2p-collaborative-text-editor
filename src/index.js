@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { render } from "react-dom";
 import P2PEditor from './lib';
 import CSS_COLORS from './lib/cssColors';
@@ -6,26 +6,34 @@ import { generateItemFromHash } from './lib/hashAlgo';
 import './style.css'
 
 const App = () => {
+  const [content, setContent] = useState('');
+  console.log(content);
+
   const [userName, setUsername] = useState('');
   const [userNameSubmitted, setUsernameSubmitted] = useState(false);
   const [peers, setPeers] = useState([]);
   const [sharingLink, setSharingLink] = useState('');
 
+  const [showCopyStatus, setShowCopyStatus] = useState(false);
+  const [showNameError, setShowNameError] = useState(false);
+  const nameInputRef = useRef(null);
+  const nameButtonRef = useRef(null);
+
   const copyToClipboard = () => {
     const temp = document.createElement("input");
-    document.querySelector("body").appendChild(temp);
+    document.querySelector("body")?.appendChild(temp);
     temp.value = sharingLink;
     temp.select();
     document.execCommand("copy");
     temp.remove();
-    document.querySelector('.copy-status').classList.add('copied');
-    setTimeout(() => document.querySelector('.copy-status').classList.remove('copied'), 1000);
+    setShowCopyStatus(true);
+    setTimeout(() => setShowCopyStatus(false), 1000);
   };
 
   const submitUsernameOnEnter = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      document.getElementById('name-button').click();
+      nameButtonRef.current?.click();
     }
   };
 
@@ -33,19 +41,30 @@ const App = () => {
     <div id="body">
       {!userNameSubmitted && (
         <div id="name-container">
-          <input id='name-input' name='handle' placeholder='Display name' onKeyDown={submitUsernameOnEnter} />
-          <button id='name-button' onClick={() => {
-            const inputUsername = document.getElementById('name-input').value.trim();
-            if (inputUsername) {
-              setUsername(inputUsername);
-              setUsernameSubmitted(true);
-            }
-            else {
-              document.getElementById('name-error').classList.remove('hidden');
-              setTimeout(() => document.getElementById('name-error')?.classList?.add('hidden'), 2000);
-            }
-          }}>Submit</button>
-          <span id="name-error" class="hidden">Display name cannot be empty!</span>
+          <input
+            id='name-input'
+            name='handle'
+            ref={nameInputRef}
+            placeholder='Display name'
+            onKeyDown={submitUsernameOnEnter}
+          />
+          <button
+            id='name-button'
+            ref={nameButtonRef}
+            onClick={() => {
+              const inputUsername = nameInputRef.current?.value.trim();
+              if (inputUsername) {
+                setUsername(inputUsername);
+                setUsernameSubmitted(true);
+              }
+              else {
+                setShowNameError(true);
+                setTimeout(() => setShowNameError(false), 2000);
+              }
+            }}>
+            Submit
+          </button>
+          {showNameError && <span id="name-error" className="hidden">Display name cannot be empty!</span>}
         </div>
       )}
       {userNameSubmitted && (
@@ -55,25 +74,27 @@ const App = () => {
             {
               peers.map(peer => (
                 <div
-                  class='peer'
+                  className='peer'
                   key={peer.id}
                   style={{
                     // color: generateItemFromHash(peer.id, CSS_COLORS),
                     borderColor: generateItemFromHash(peer.id, CSS_COLORS),
                   }}
                 >
-                  <span class="online-dot" />
+                  <span className="online-dot" />
                   {peer.name}
                 </div>
               ))
             }
           </div>
-          <span class="copy-status">Copied!</span>
-          <button class="link" id="share-button" onClick={copyToClipboard}>
+          {showCopyStatus && <span className="copy-status">Copied!</span>}
+          <button className="link" id="share-button" onClick={copyToClipboard}>
             Copy Sharing Link
           </button>
         </div>
         <P2PEditor
+          initialContent={'asdfasdfasdf'}
+          onChange={setContent}
           userName={userName}
           setPeers={setPeers}
           setSharingLink={setSharingLink}
