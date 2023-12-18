@@ -1,4 +1,1 @@
-{
-  "presets": ["es2015", "stage-3"],
-  "plugins": []
-}
+{ "presets": [["react-app", { "absoluteRuntime": false }]] }

@@ -1,41 +1,32 @@
-![Conclave Logo](/public/assets/img/conclave-mask-small.ico)
+# react-p2p-collaborative-text-editor
 
-# Conclave: Collaborate in private
+> Peer-to-peer collaborative and flexible text editor for React.
 
-# No Longer Maintained
+Fork of [Conclave](https://github.com/conclave-team/conclave).
 
-Conclave was made for fun and educational purposes but it is no longer actively maintained. The creators have since moved onto other projects and work. It will remain open so that developers can ask questions and fork it. The demo at [https://conclave.tech](https://conclave.tech) will also stay up. However, feature requests will **not** be worked on by the creators at this time.
+[![NPM](https://img.shields.io/npm/v/react-p2p-collaborative-text-editor.svg)](https://www.npmjs.com/package/react-p2p-collaborative-text-editor) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-Thanks again to all the developers who found this project interesting. Feel free ask questions to learn more about how it works and its internals. Hopefully you will venture off and create your own version of Conclave as well.
+## Install
 
-## Summary
-
-Conclave is an open-source, real-time, collaborative text editor for the browser built from scratch in JavaScript.
-
-Intrigued by collaboration tools like Google Docs, we set out to build one from scratch. Conclave uses **Conflict-Free Replicated Data Types** (CRDT) to make sure all users stay in-sync and **WebRTC** to allow users to send messages directly to one another. The result is a private and decentralized way to collaborate on documents.
-
-For more details on how we designed and built Conclave, read our [case study](https://conclave-team.github.io/conclave-site/).
-
-# How to Run Locally
-
-You will need node and npm. First download the dependencies.
-
-```
-npm install
+```bash
+npm install --save react-p2p-collaborative-text-editor
 ```
 
-Next, you will need to build and compile the assets and start the server. You can do that all in an npm command.
+## Usage
 
+```tsx
+import React from 'react';
+import P2PEditor from 'react-p2p-collaborative-text-editor';
+
+const MyP2PEditor = () => {
+  return (
+    <P2PEditor />
+  );
+};
+
+export default MyP2PEditor;
 ```
-npm run local
-```
 
-We've added a Makefile and Dockerfile to make this easier. I highly recommend using them.
+## License
 
-Simply run:
-
-```
-make run-local
-```
-
-And you will be good to go.
+MIT © [DrSwad](https://github.com/DrSwad)

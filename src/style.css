@@ -1,0 +1,140 @@
+/****************
+General
+****************/
+
+body {
+  margin: 0;
+}
+
+#body {
+  padding: 2rem;
+}
+
+/****************
+Animations
+****************/
+
+@keyframes blinker {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/****************
+Username
+****************/
+
+#name-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#name-input {
+  border-radius: .5rem;
+  height: 3rem;
+  padding: .5rem 2rem;
+  font-size: 1.5rem;
+  font-family: "InputLight";
+  color: #333;
+  border: #333 solid thin;
+  margin: 1rem 0 2rem 0;
+}
+
+#name-button {
+  border-radius: .5rem;
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-family: "InputLight";
+  color: #fff;
+  border: none;
+  background-color: #333;
+}
+
+#name-button:hover {
+  cursor: pointer;
+  background-color: #555;
+}
+
+#name-error {
+  font-size: 1rem;
+  margin-top: 1rem;
+  align-self: center;
+  color: #d00;
+}
+
+#name-error.hidden {
+  display: none;
+}
+
+/****************
+Editor
+****************/
+
+#header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#peers {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.peer {
+  font-family: "InputLight";
+  color: #333;
+  border: #555 solid .2rem;
+  border-radius: 1rem;
+  padding: .5rem 1rem;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+}
+
+.online-dot {
+  display: inline-block;
+  height: .5rem;
+  width: .5rem;
+  border-radius: 50%;
+  background-color: #0d0;
+  margin-right: .5rem;
+}
+
+#share-button {
+  padding: 0 15px;
+  border-radius: 5px;
+  border: 1px solid rgb(17, 117, 232);
+  margin: 0 0 10px 10px;
+  font-family: "InputLight";
+  font-size: 12px;
+  line-height: 32px;
+  color: rgb(17, 117, 232);
+  cursor: pointer;
+  background-color: #fff;
+}
+
+#share-button:hover {
+  cursor: pointer;
+  background-color: #f3f3f3;
+}
+
+/****************
+Copy
+****************/
+
+.copy-container {
+  margin-right: 10px;
+}
+
+.copy-status {
+  font-family: "InputLight";
+  opacity: 0;
+  vertical-align: 5px;
+}
+
+.copy-status.copied {
+  animation: blinker 1s cubic-bezier(.5, 0, 1, 1);
+}
