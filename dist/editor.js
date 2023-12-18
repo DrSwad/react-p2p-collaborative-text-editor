@@ -14,6 +14,9 @@ class Editor {
     this.customTabBehavior();
     this.document = document;
   }
+  onChangeCallback() {
+    this.controller.callbacks.onChange(this.mde.value());
+  }
   customTabBehavior() {
     this.mde.codemirror.setOption("extraKeys", {
       Tab: function (codemirror) {
@@ -47,7 +50,6 @@ class Editor {
         default:
           throw new Error("Unknown operation attempted in editor.");
       }
-      this.controller.callbacks.onChange(this.mde.value());
     });
   }
   processInsert(changeObj) {
@@ -56,6 +58,7 @@ class Editor {
     const startPos = changeObj.from;
     this.updateRemoteCursorsInsert(chars, changeObj.to);
     this.controller.localInsert(chars, startPos);
+    this.onChangeCallback();
   }
   isEmpty(textArr) {
     return textArr.length === 1 && textArr[0].length === 0;
@@ -67,6 +70,7 @@ class Editor {
     const chars = this.extractChars(changeObj.removed);
     this.updateRemoteCursorsDelete(chars, changeObj.to, changeObj.from);
     this.controller.localDelete(startPos, endPos);
+    this.onChangeCallback();
   }
   processUndoRedo(changeObj) {
     if (changeObj.removed[0].length > 0) {
@@ -86,6 +90,7 @@ class Editor {
     const cursor = this.mde.codemirror.getCursor();
     this.mde.value(text);
     this.mde.codemirror.setCursor(cursor);
+    this.onChangeCallback();
   }
   insertText(value, positions, siteId) {
     const localCursor = this.mde.codemirror.getCursor();
@@ -103,6 +108,7 @@ class Editor {
       localCursor.ch += delta.ch;
     }
     this.mde.codemirror.setCursor(localCursor);
+    this.onChangeCallback();
   }
   removeCursor(siteId) {
     const remoteCursor = this.remoteCursors[siteId];
@@ -184,6 +190,7 @@ class Editor {
       localCursor.ch -= delta.ch;
     }
     this.mde.codemirror.setCursor(localCursor);
+    this.onChangeCallback();
   }
   findLinearIdx(lineIdx, chIdx) {
     const linesOfText = this.controller.crdt.text.split("\n");

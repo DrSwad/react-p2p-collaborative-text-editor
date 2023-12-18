@@ -11,16 +11,21 @@ const P2PEditor = ({
   setSharingLink = (sharingLink) => {},
   style = {},
 }) => {
+  const initialized = useRef(false);
+
   useEffect(() => {
-    initialize(
-      textAreaRef,
-      placeholder,
-      initialContent,
-      userName,
-      { setPeers, setSharingLink, onChange },
-      document,
-      window,
-    );
+    if (!initialized.current) {
+      initialized.current = true;
+      initialize(
+        textAreaRef,
+        placeholder,
+        initialContent,
+        userName,
+        { setPeers, setSharingLink, onChange },
+        document,
+        window,
+      );
+    }
   }, [placeholder, initialContent, userName, onChange, setPeers, setSharingLink]);
 
   const textAreaRef = useRef(null)

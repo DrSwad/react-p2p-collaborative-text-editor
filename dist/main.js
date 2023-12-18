@@ -24,7 +24,10 @@ function initialize(textAreaRef, placeholder, initialContent, userName, callback
     lineWrapping: true,
     shortCuts: []
   }), document);
-  const controller = new _controller.default(window.location.search.slice(1) || '0', window.location.origin, userName, new _peerjs.default({
+  const targetPeerId = window.location.search.slice(1) || '0';
+  const href = window.location.protocol + '//' + window.location.host + window.location.pathname;
+  console.log(href);
+  const controller = new _controller.default(targetPeerId, href, userName, new _peerjs.default({
     debug: 3
   }), new _broadcast.default(), editor, document, window, callbacks);
   const getText = () => {
@@ -37,9 +40,11 @@ function initialize(textAreaRef, placeholder, initialContent, userName, callback
     });
     editor.replaceText(controller.crdt.toText());
   };
-  if (initialContent) {
+  if (initialContent && targetPeerId === '0') {
     setText(initialContent);
     callbacks.onChange(initialContent);
+  } else {
+    callbacks.onChange(getText());
   }
   return {
     getText,

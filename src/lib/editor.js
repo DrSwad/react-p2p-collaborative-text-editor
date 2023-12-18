@@ -9,6 +9,10 @@ class Editor {
     this.document = document;
   }
 
+  onChangeCallback() {
+    this.controller.callbacks.onChange(this.mde.value());
+  }
+
   customTabBehavior() {
     this.mde.codemirror.setOption("extraKeys", {
       Tab: function(codemirror) {
@@ -44,8 +48,6 @@ class Editor {
         default:
           throw new Error("Unknown operation attempted in editor.");
       }
-
-      this.controller.callbacks.onChange(this.mde.value());
     });
   }
 
@@ -56,6 +58,8 @@ class Editor {
 
     this.updateRemoteCursorsInsert(chars, changeObj.to);
     this.controller.localInsert(chars, startPos);
+
+    this.onChangeCallback();
   }
 
   isEmpty(textArr) {
@@ -70,6 +74,8 @@ class Editor {
 
     this.updateRemoteCursorsDelete(chars, changeObj.to, changeObj.from);
     this.controller.localDelete(startPos, endPos);
+
+    this.onChangeCallback();
   }
 
   processUndoRedo(changeObj) {
@@ -92,6 +98,8 @@ class Editor {
     const cursor = this.mde.codemirror.getCursor();
     this.mde.value(text);
     this.mde.codemirror.setCursor(cursor);
+
+    this.onChangeCallback();
   }
 
   insertText(value, positions, siteId) {
@@ -114,6 +122,8 @@ class Editor {
     }
 
     this.mde.codemirror.setCursor(localCursor);
+
+    this.onChangeCallback();
   }
 
   removeCursor(siteId) {
@@ -215,6 +225,8 @@ class Editor {
     }
 
     this.mde.codemirror.setCursor(localCursor);
+
+    this.onChangeCallback();
   }
 
   findLinearIdx(lineIdx, chIdx) {

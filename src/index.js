@@ -27,7 +27,11 @@ const App = () => {
     document.execCommand("copy");
     temp.remove();
     setShowCopyStatus(true);
-    setTimeout(() => setShowCopyStatus(false), 1000);
+    document.querySelector('.copy-status')?.classList.add('copied');
+    setTimeout(() => {
+      setShowCopyStatus(false);
+      document.querySelector('.copy-status')?.classList.remove('copied')
+    }, 1000);
   };
 
   const submitUsernameOnEnter = (e) => {
@@ -93,7 +97,7 @@ const App = () => {
           </button>
         </div>
         <P2PEditor
-          initialContent={'asdfasdfasdf'}
+          initialContent={'# Hello World!!!'}
           onChange={setContent}
           userName={userName}
           setPeers={setPeers}

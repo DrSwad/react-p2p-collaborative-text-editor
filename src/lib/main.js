@@ -31,9 +31,12 @@ export default function initialize(
     document
   );
 
+  const targetPeerId = (window.location.search.slice(1) || '0');
+  const href = window.location.protocol + '//' + window.location.host + window.location.pathname;
+  console.log(href);
   const controller = new Controller(
-    (window.location.search.slice(1) || '0'),
-    window.location.origin,
+    targetPeerId,
+    href,
     userName,
     new Peer({
         debug: 3
@@ -54,9 +57,12 @@ export default function initialize(
     editor.replaceText(controller.crdt.toText());
   };
 
-  if (initialContent) {
+  if (initialContent && targetPeerId === '0') {
     setText(initialContent);
     callbacks.onChange(initialContent);
+  }
+  else {
+    callbacks.onChange(getText());
   }
 
   return { getText, setText };

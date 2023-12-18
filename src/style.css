@@ -125,14 +125,8 @@ Editor
 Copy
 ****************/
 
-.copy-container {
-  margin-right: 10px;
-}
-
 .copy-status {
   font-family: "InputLight";
-  opacity: 0;
-  vertical-align: 5px;
 }
 
 .copy-status.copied {

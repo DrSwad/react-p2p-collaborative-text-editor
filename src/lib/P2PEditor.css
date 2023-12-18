@@ -18,6 +18,7 @@ CodeMirror
 
 .CodeMirror {
   font-family: 'InputLight';
+  font-size: 90% !important;
   border-radius: 8px;
   line-height: 1.5em;
   border: none;

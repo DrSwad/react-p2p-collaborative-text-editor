@@ -19,12 +19,16 @@ const P2PEditor = _ref => {
     setSharingLink = sharingLink => {},
     style = {}
   } = _ref;
+  const initialized = (0, _react.useRef)(false);
   (0, _react.useEffect)(() => {
-    (0, _main.default)(textAreaRef, placeholder, initialContent, userName, {
-      setPeers,
-      setSharingLink,
-      onChange
-    }, document, window);
+    if (!initialized.current) {
+      initialized.current = true;
+      (0, _main.default)(textAreaRef, placeholder, initialContent, userName, {
+        setPeers,
+        setSharingLink,
+        onChange
+      }, document, window);
+    }
   }, [placeholder, initialContent, userName, onChange, setPeers, setSharingLink]);
   const textAreaRef = (0, _react.useRef)(null);
   return /*#__PURE__*/_react.default.createElement("div", {
