@@ -11,17 +11,21 @@ var _main = _interopRequireDefault(require("./main"));
 require("./P2PEditor.css");
 const P2PEditor = _ref => {
   let {
+    placeholder = 'Share the link to invite collaborators to your document.',
+    initialContent = '',
+    onChange = content => {},
     userName = 'Unnamed User',
     setPeers = peers => {},
     setSharingLink = sharingLink => {},
     style = {}
   } = _ref;
   (0, _react.useEffect)(() => {
-    (0, _main.default)(textAreaRef, userName, {
+    (0, _main.default)(textAreaRef, placeholder, initialContent, userName, {
       setPeers,
-      setSharingLink
+      setSharingLink,
+      onChange
     }, document, window);
-  }, [userName, setPeers, setSharingLink]);
+  }, [placeholder, initialContent, userName, onChange, setPeers, setSharingLink]);
   const textAreaRef = (0, _react.useRef)(null);
   return /*#__PURE__*/_react.default.createElement("div", {
     id: "CodeMirrorWrapper",

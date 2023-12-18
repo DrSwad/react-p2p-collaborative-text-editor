@@ -11,10 +11,10 @@ require("simplemde-w/dist/simplemde.min.css");
 var _controller = _interopRequireDefault(require("./controller"));
 var _broadcast = _interopRequireDefault(require("./broadcast"));
 var _editor = _interopRequireDefault(require("./editor"));
-function initialize(textAreaRef, userName, callbacks, document, window) {
+function initialize(textAreaRef, placeholder, initialContent, userName, callbacks, document, window) {
   const editor = new _editor.default(new _simplemdeW.default({
     element: textAreaRef.current,
-    placeholder: "Share the link to invite collaborators to your document.",
+    placeholder: placeholder,
     spellChecker: true,
     toolbar: false,
     autofocus: false,
@@ -37,6 +37,10 @@ function initialize(textAreaRef, userName, callbacks, document, window) {
     });
     editor.replaceText(controller.crdt.toText());
   };
+  if (initialContent) {
+    setText(initialContent);
+    callbacks.onChange(initialContent);
+  }
   return {
     getText,
     setText
