@@ -3,6 +3,7 @@ import initialize from "./main";
 import "./P2PEditor.css"
 
 const P2PEditor = ({
+  peerOptions = {},
   placeholder =  'Share the link to invite collaborators to your document.',
   initialContent = '',
   onChange = (content) => {},
@@ -17,6 +18,7 @@ const P2PEditor = ({
     if (!initialized.current) {
       initialized.current = true;
       initialize(
+        peerOptions,
         textAreaRef,
         placeholder,
         initialContent,
@@ -26,7 +28,7 @@ const P2PEditor = ({
         window,
       );
     }
-  }, [placeholder, initialContent, userName, onChange, setPeers, setSharingLink]);
+  }, [peerOptions, placeholder, initialContent, userName, onChange, setPeers, setSharingLink]);
 
   const textAreaRef = useRef(null)
 

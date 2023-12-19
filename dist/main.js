@@ -11,7 +11,17 @@ require("simplemde-w/dist/simplemde.min.css");
 var _controller = _interopRequireDefault(require("./controller"));
 var _broadcast = _interopRequireDefault(require("./broadcast"));
 var _editor = _interopRequireDefault(require("./editor"));
-function initialize(textAreaRef, placeholder, initialContent, userName, callbacks, document, window) {
+function initialize() {
+  let peerOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    debug: 3
+  };
+  let textAreaRef = arguments.length > 1 ? arguments[1] : undefined;
+  let placeholder = arguments.length > 2 ? arguments[2] : undefined;
+  let initialContent = arguments.length > 3 ? arguments[3] : undefined;
+  let userName = arguments.length > 4 ? arguments[4] : undefined;
+  let callbacks = arguments.length > 5 ? arguments[5] : undefined;
+  let document = arguments.length > 6 ? arguments[6] : undefined;
+  let window = arguments.length > 7 ? arguments[7] : undefined;
   const editor = new _editor.default(new _simplemdeW.default({
     element: textAreaRef.current,
     placeholder: placeholder,
@@ -26,10 +36,7 @@ function initialize(textAreaRef, placeholder, initialContent, userName, callback
   }), document);
   const targetPeerId = window.location.search.slice(1) || '0';
   const href = window.location.protocol + '//' + window.location.host + window.location.pathname;
-  console.log(href);
-  const controller = new _controller.default(targetPeerId, href, userName, new _peerjs.default({
-    debug: 3
-  }), new _broadcast.default(), editor, document, window, callbacks);
+  const controller = new _controller.default(targetPeerId, href, userName, new _peerjs.default(peerOptions), new _broadcast.default(), editor, document, window, callbacks);
   const getText = () => {
     return editor.mde.value();
   };

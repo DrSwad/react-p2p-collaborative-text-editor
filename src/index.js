@@ -7,7 +7,6 @@ import './style.css'
 
 const App = () => {
   const [content, setContent] = useState('');
-  console.log(content);
 
   const [userName, setUsername] = useState('');
   const [userNameSubmitted, setUsernameSubmitted] = useState(false);
@@ -97,6 +96,9 @@ const App = () => {
           </button>
         </div>
         <P2PEditor
+          peerOptions={{
+            debug: 3,
+          }}
           initialContent={'# Hello World!!!'}
           onChange={setContent}
           userName={userName}

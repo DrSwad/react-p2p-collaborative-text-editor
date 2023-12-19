@@ -7,6 +7,7 @@ import Broadcast from './broadcast';
 import Editor from './editor';
 
 export default function initialize(
+  peerOptions = { debug: 3 },
   textAreaRef,
   placeholder,
   initialContent,
@@ -33,14 +34,11 @@ export default function initialize(
 
   const targetPeerId = (window.location.search.slice(1) || '0');
   const href = window.location.protocol + '//' + window.location.host + window.location.pathname;
-  console.log(href);
   const controller = new Controller(
     targetPeerId,
     href,
     userName,
-    new Peer({
-        debug: 3
-      }),
+    new Peer(peerOptions),
     new Broadcast(),
     editor,
     document,
